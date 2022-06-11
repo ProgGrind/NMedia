@@ -23,7 +23,7 @@
         android:layout_marginEnd="8dp"
         android:ellipsize="end"
         android:singleLine="true"
-        app:layout_constaintTop_toTopOf="@+id/avatar"
+        app:layout_constraintTop_toTopOf="@+id/avatar"
         app:layout_constraintBottom_toTopOf="@+id/date"
         app:layout_constraintEnd_toStartOf="@+id/options"
         app:layout_constraintStart_toEndOf="@+id/avatar"

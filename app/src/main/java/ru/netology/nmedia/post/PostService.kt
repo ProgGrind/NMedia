@@ -2,23 +2,23 @@ package ru.netology.nmedia.post
 
 class PostService {
 
-    private val likes = mutableListOf<Post>()
+//    private val likes = mutableListOf<Post>()
 
-    fun liking (post: Post): Int {
-        if (post.likedByMe) {
-            post.likes++
-            likes.add(post)
-        } else if (!post.likedByMe) {
-            post.likes--
-            likes.remove(post)
-        }
-        return post.likes
-    }
-
-    fun sharing (post: Post): Int {
-        post.shares++
-        return post.shares
-    }
+//    fun liking (post: Post): Int {
+//        if (post.likedByMe) {
+//            post.likes++
+//            likes.add(post)
+//        } else if (!post.likedByMe) {
+//            post.likes--
+//            likes.remove(post)
+//        }
+//        return post.likes
+//    }
+//
+//    fun sharing (post: Post): Int {
+//        post.shares++
+//        return post.shares
+//    }
 
     fun countTranslator(T: Int): String {
         val counting = when (T) {

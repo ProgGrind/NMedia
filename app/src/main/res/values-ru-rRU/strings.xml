@@ -3,4 +3,8 @@
     <string name="app_name">НМедиа</string>
     <string name="greeting">НМедиа!</string>
     <string name="avatar_description">Аватар автора</string>
+    <string name="description_post_edit_submit">Подтвердить редактирование</string>
+    <string name="remove">Удалить</string>
+    <string name="post_text">Текст поста</string>
+    <string name="menu_edit">Изменить</string>
 </resources>

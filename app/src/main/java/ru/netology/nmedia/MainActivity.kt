@@ -3,61 +3,55 @@ package ru.netology.nmedia
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatTextView
-import kotlinx.android.synthetic.main.post_list_item.*
+import kotlinx.android.synthetic.main.activity_main.*
+import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
-import ru.netology.nmedia.post.PostService
+import ru.netology.nmedia.util.hideKeyboard
+import ru.netology.nmedia.util.showKeyboard
 import ru.netology.nmedia.viewModel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
-
-    private val viewModel by viewModels<PostViewModel>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val viewModel: PostViewModel by viewModels()
 
-        val postService = PostService()
+        val adapter = PostsAdapter(viewModel)
+        binding.postsRecycleViewer.adapter = adapter
+        viewModel.data.observe(this) { posts ->
+            adapter.submitList(posts)
+        }
+        binding.saveButton.setOnClickListener {
+            with(binding.contentEditText) {
+                val content = text.toString()
+                viewModel.onSaveButtonClicked(content)
 
-        viewModel.data.observe(this) { post ->
-            with(binding) {
-                author.text = post.author
-                content.text = post.content
-                published.text = post.published
-
-                //лайки переводятся в нужное число и становятся видимыми
-                likes.text = postService.countTranslator(post.likes)
-                like.setImageResource(getLikeIconResId(post.likedByMe))
-                getVisibility(likes, post.likes)
-
-                shares.text = postService.countTranslator(post.shares)
-                getVisibility(shares, post.shares)
+                clearFocus()
+                hideKeyboard()
             }
         }
 
-        binding.postListItem.like.setOnClickListener {
-            viewModel.onLikeClicked()
+        binding.cancelButton.setOnClickListener {
+            viewModel.onCancelEditClicked()
         }
 
-        binding.postListItem.share.setOnClickListener {
-            viewModel.onShareClicked()
-            share.setImageResource(R.drawable.ic_shared_24dp)
-            share.postDelayed({binding.postListItem.share.setImageResource(R.drawable.ic_share_24dp) },
-                300)
+        viewModel.currentPost.observe(this) { currentPost ->
+            with(binding.contentEditText) {
+                val content = currentPost?.content
+                setText(content)
+                if (content !== null) {
+                    requestFocus()
+                    showKeyboard()
+                    group.visibility = View.VISIBLE
+                } else {
+                    clearFocus()
+                    hideKeyboard()
+                    group.visibility = View.GONE
+                }
+            }
+
         }
     }
-
-    @DrawableRes
-    private fun getLikeIconResId(liked: Boolean) =
-        if (liked)
-            R.drawable.ic_liked_24dp else R.drawable.ic_like_24dp
-
-    private fun getVisibility(T: AppCompatTextView, t: Int) =
-        if(t == 0) T.visibility = View.INVISIBLE
-        else T.visibility = View.VISIBLE
 }
-

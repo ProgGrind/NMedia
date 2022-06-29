@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatTextView
+import kotlinx.android.synthetic.main.activity_main.*
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
+import ru.netology.nmedia.util.hideKeyboard
+import ru.netology.nmedia.util.showKeyboard
 import ru.netology.nmedia.viewModel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -14,46 +16,42 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        val postService = PostService()
         val viewModel: PostViewModel by viewModels()
 
-        val adapter = PostsAdapter(
-            onLikeClicked = {post ->
-                viewModel.onLikeClicked(post)
-            },
-            onShareClicked = { post ->
-                viewModel.onShareClicked(post)
-            }
-        )
-        binding.postsRecyclerView.adapter = adapter
-        viewModel.data.observe(this) {  posts ->
+        val adapter = PostsAdapter(viewModel)
+        binding.postsRecycleViewer.adapter = adapter
+        viewModel.data.observe(this) { posts ->
             adapter.submitList(posts)
         }
+        binding.saveButton.setOnClickListener {
+            with(binding.contentEditText) {
+                val content = text.toString()
+                viewModel.onSaveButtonClicked(content)
+
+                clearFocus()
+                hideKeyboard()
+            }
+        }
+
+        binding.cancelButton.setOnClickListener {
+            viewModel.onCancelEditClicked()
+        }
+
+        viewModel.currentPost.observe(this) { currentPost ->
+            with(binding.contentEditText) {
+                val content = currentPost?.content
+                setText(content)
+                if (content !== null) {
+                    requestFocus()
+                    showKeyboard()
+                    group.visibility = View.VISIBLE
+                } else {
+                    clearFocus()
+                    hideKeyboard()
+                    group.visibility = View.GONE
+                }
+            }
+
+        }
     }
-
-
-
-
 }
-
-//like.setImageResource(
-//if (post.likedByMe) R.drawable.ic_liked_24dp else R.drawable.ic_like_24dp
-//)
-////                    getVisibility(likes as AppCompatTextView, post.likes)
-//
-//
-//
-////                    getVisibility(shares as AppCompatTextView, post.shares)
-//
-//like.setOnClickListener {
-//    viewModel.onLikeClicked(post)
-//    likes.text = postService.countTranslator(post.likes)
-//}
-//
-//share.setOnClickListener {
-//    viewModel.onShareClicked(post)
-//    shares.text = postService.countTranslator(post.shares)
-//    share.setImageResource(R.drawable.ic_shared_24dp)
-//    share.postDelayed({share.setImageResource(R.drawable.ic_share_24dp) },
-//        300)
-//}

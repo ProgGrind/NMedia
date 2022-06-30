@@ -1,8 +1,10 @@
 package ru.netology.nmedia.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
@@ -63,11 +65,8 @@ class PostsAdapter(
             }
             binding.share.setOnClickListener {
                 listener.onShareClicked(post)
-                binding.share.setImageResource(R.drawable.ic_shared_24dp)
-                binding.share.postDelayed({binding.share.setImageResource(
-                    R.drawable.ic_share_24dp) },300
-                )
             }
+            binding.menu.setOnClickListener { popupMenu.show() }
 
         }
 
@@ -78,21 +77,15 @@ class PostsAdapter(
                 author.text = post.author
                 content.text = post.content
                 published.text = post.published
-                likes.text = countTranslator(post.likes)
-                shares.text = countTranslator(post.shares)
-                like.setImageResource(
-                    if (post.likedByMe) R.drawable.ic_liked_24dp else R.drawable.ic_like_24dp
-                )
-                getVisibility(likes as AppCompatTextView, post.likes)
-                getVisibility(shares as AppCompatTextView, post.shares)
-                menu.setOnClickListener { popupMenu.show() }
+                like.text = countTranslator(post.likes)
+                like.isChecked = post.likedByMe
+                share.text = countTranslator(post.shares)
             }
         }
     }
     private object DiffCallback : DiffUtil.ItemCallback<Post>() {
         override fun areItemsTheSame(oldItem: Post, newItem: Post) =
             oldItem.id == newItem.id
-
 
         override fun areContentsTheSame(oldItem: Post, newItem: Post) =
             oldItem == newItem
@@ -127,6 +120,6 @@ fun countTranslator(T: Int): String {
     return counting
 }
 
-private fun getVisibility(T: AppCompatTextView, t: Int) =
-    if(t == 0) T.visibility = View.INVISIBLE
-    else T.visibility = View.VISIBLE
+//private fun getVisibility(T: TextView, t: Int) =
+//    if(t == 0) T.setTextColor(null)
+//    else T.setTextColor(Color.GRAY)

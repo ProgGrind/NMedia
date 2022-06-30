@@ -5,6 +5,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.post_list_item.view.*
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.util.hideKeyboard
@@ -51,7 +52,6 @@ class MainActivity : AppCompatActivity() {
                     group.visibility = View.GONE
                 }
             }
-
         }
     }
 }

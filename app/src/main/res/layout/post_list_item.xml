@@ -112,16 +112,45 @@
         app:layout_constraintTop_toBottomOf="@id/footer"
         app:icon="@drawable/ic_views_24dp" />
 
-    <TextView
-        android:id="@+id/viewsText"
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/videoGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_margin"
-        android:layout_marginEnd="@dimen/common_margin"
-        android:ellipsize="end"
-        android:singleLine="true"
-        app:layout_constraintBottom_toBottomOf="@id/views"
-        app:layout_constraintStart_toEndOf="@id/views"
-        tools:text="" />
+        app:constraint_referenced_ids="video, play" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        style="@style/Widget.App.Button.VideoInteractionButton"
+        app:layout_constraintBottom_toBottomOf="@+id/video"
+        app:layout_constraintStart_toStartOf="@+id/video"
+        app:layout_constraintEnd_toEndOf="@+id/video"
+        app:layout_constraintTop_toTopOf="@+id/video"
+        app:srcCompat="@drawable/ic_play_24dp" />
+
+    <ImageView
+        android:id="@+id/video"
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/video"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/content"
+        app:layout_constraintBottom_toTopOf="@id/footer" />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/video"-->
+<!--        android:layout_below="@+id/play"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/content"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/footer"-->
+<!--        app:srcCompat="@drawable/video"-->
+<!--        android:adjustViewBounds="true"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        android:layout_height="wrap_content"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

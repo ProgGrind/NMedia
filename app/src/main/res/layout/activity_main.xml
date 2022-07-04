@@ -1,89 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-
-
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-
-<!--        xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--        xmlns:tools="http://schemas.android.com/tools"-->
-<!--        android:id="@+id/postsRecyclerView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--        tools:context=".MainActivity"-->
-<!--        tools:listitem="@layout/post_list_item">-->
+    tools:context=".activity.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/postsRecycleViewer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/toolsTopBarrier"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/post_list_item"/>
+        tools:listitem="@layout/post_list_item" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/toolsTopBarrier"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:barrierDirection="top"
-        app:constraint_referenced_ids="contentEditText,saveButton" />
-
-    <EditText
-        android:id="@+id/contentEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/post_text"
-        android:inputType="textMultiLine"
-        android:background="@android:color/transparent"
-        android:padding="@dimen/common_spacing"
-        android:importantForAutofill="no"
-        app:layout_constraintTop_toTopOf="@id/toolsTopBarrier"
+        android:layout_margin="@dimen/common_margin"
+        android:contentDescription="@string/add_post"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/saveButton"
-        app:layout_constraintStart_toStartOf="parent"
-        />
-
-    <ImageButton
-        android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/description_post_edit_submit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/contentEditText"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/ic_save_48"
-        />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="cancelButton" />
-
-    <ImageButton
-        android:id="@+id/cancelButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/description_post_edit_submit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/contentEditText"
-        app:layout_constraintBottom_toTopOf="@id/toolsTopBarrier"
-        app:srcCompat="@drawable/ic_cancel_48"
-        />
+        app:srcCompat="@drawable/ic_add_24dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--<ImageButton-->
+    <!--android:id="@+id/saveButton"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="@dimen/common_spacing"-->
+    <!--android:background="@android:color/transparent"-->
+    <!--android:contentDescription="@string/description_post_edit_submit"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:srcCompat="@drawable/ic_save_48"-->
+    <!--    />-->
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    tools:context=".activity.MainActivity">-->
+
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/postsRecycleViewer"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/toolsTopBarrier"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        tools:listitem="@layout/post_list_item"/>-->
+
+
+    <!--&lt;!&ndash;    <EditText&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:id="@+id/contentEditText"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:layout_width="0dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:hint="@string/post_text"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:inputType="textMultiLine"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:background="@android:color/transparent"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:padding="@dimen/common_spacing"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:importantForAutofill="no"&ndash;&gt;-->
+    <!--&lt;!&ndash;        app:layout_constraintTop_toTopOf="@id/toolsTopBarrier"&ndash;&gt;-->
+    <!--&lt;!&ndash;        app:layout_constraintBottom_toBottomOf="parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;        app:layout_constraintEnd_toStartOf="@id/saveButton"&ndash;&gt;-->
+    <!--&lt;!&ndash;        app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;        />&ndash;&gt;-->
+
+
+    <!--    <androidx.constraintlayout.widget.Group-->
+    <!--        android:id="@+id/group"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:visibility="gone"-->
+    <!--        app:constraint_referenced_ids="cancelButton" />-->
+
+
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
 

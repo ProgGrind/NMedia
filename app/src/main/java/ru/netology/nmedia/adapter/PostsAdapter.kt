@@ -1,11 +1,8 @@
 package ru.netology.nmedia.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -13,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.PostListItemBinding
 import ru.netology.nmedia.post.Post
-
-typealias OnButtonListener = (Post) -> Unit
 
 class PostsAdapter(
     private val interactionListener: PostInteractionListener
@@ -68,6 +63,13 @@ class PostsAdapter(
             }
             binding.menu.setOnClickListener { popupMenu.show() }
 
+            binding.play.setOnClickListener {
+                listener.onPlayVideoClicked(post)
+            }
+            binding.video.setOnClickListener {
+                listener.onPlayVideoClicked(post)
+            }
+
         }
 
         fun bind(post: Post) {
@@ -80,6 +82,8 @@ class PostsAdapter(
                 like.text = countTranslator(post.likes)
                 like.isChecked = post.likedByMe
                 share.text = countTranslator(post.shares)
+                videoGroup.visibility =
+                    if (post.videoURL.isBlank()) View.GONE else View.VISIBLE
             }
         }
     }

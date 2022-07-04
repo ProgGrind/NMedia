@@ -23,7 +23,8 @@ class InMemoryPostRepository : PostRepository {
                 author = "Netology",
                 content = "Some random content ${index + 1}",
                 published = "19.06.2022",
-                likedByMe = false
+                likedByMe = false,
+                videoURL = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
             )
         }
         data = MutableLiveData(initialPosts)

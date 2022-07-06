@@ -28,23 +28,6 @@ class MainActivity : AppCompatActivity() {
             viewModel.onCreateNewPost()
         }
 
-
-//        viewModel.currentPost.observe(this) { currentPost ->
-//            with(binding.) {
-//                val content = currentPost?.content
-//                setText(content)
-//                if (content !== null) {
-//                    requestFocus()
-//                    showKeyboard()
-//                    group.visibility = View.VISIBLE
-//                } else {
-//                    clearFocus()
-//                    hideKeyboard()
-//                    group.visibility = View.GONE
-//                }
-//            }
-//        }
-
         viewModel.playVideoURL.observe(this) { videoURL ->
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(videoURL))
             startActivity(intent)
@@ -71,8 +54,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.navigateToPostContentScreenEvent.observe(this){
-            postContentActivityLauncher.launch()
+            postContentActivityLauncher.launch(viewModel.currentPost.value?.content)
         }
 
     }
+
 }

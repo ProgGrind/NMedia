@@ -16,6 +16,7 @@ class PostViewModel : ViewModel(), PostInteractionListener {
 
     //    val shareEvent = SingleLiveEvent<Post>()
     val sharePostContent = SingleLiveEvent<String>()
+    val editPostContent = SingleLiveEvent<String>()
     val navigateToPostContentScreenEvent = SingleLiveEvent<Unit>()
     val playVideoURL = SingleLiveEvent<String>()
 

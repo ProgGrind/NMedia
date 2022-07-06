@@ -18,43 +18,37 @@ class PostActivity : AppCompatActivity() {
 
         val binding = ActivityNewPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel.currentPost.observe(this) { currentPost ->
-        with(binding.edit) {
-            setText(currentPost?.content)
-            requestFocus()
-            }
-        }
 
-        binding.ok.setOnClickListener{
-            onOkButtonClicked(binding.edit.text?.toString())
+        binding.edit.setText(intent.getStringExtra(Intent.EXTRA_TEXT))
+        binding.edit.requestFocus()
+        setResult(Activity.RESULT_OK, intent)
+
+        binding.ok.setOnClickListener {
+            val intent = Intent()
+            val text = binding.edit.text
+            if (text.isNullOrBlank()) {
+                setResult(Activity.RESULT_CANCELED, intent)
+            } else {
+                val content = text.toString()
+                intent.putExtra(POST_CONTENT_EXTRA_KEY, content)
+                setResult(Activity.RESULT_OK, intent)
+            }
+            finish()
         }
 
         binding.cancelButton.setOnClickListener{
             finish()
         }
-
-    }
-
-    private fun onOkButtonClicked(postContent: String?) {
-        val intent = Intent()
-
-        if (postContent.isNullOrBlank()) {
-            setResult(Activity.RESULT_CANCELED, intent)
-        } else {
-            intent.putExtra(POST_CONTENT_EXTRA_KEY, postContent)
-            setResult(Activity.RESULT_OK, intent)
-        }
-        finish()
     }
 
     private companion object {
         const val POST_CONTENT_EXTRA_KEY = "postContent"
     }
 
-    object ResultContract : ActivityResultContract<Unit, String?>() {
-        override fun createIntent(context: Context, input: Unit) =
+    object ResultContract : ActivityResultContract<String?, String?>() {
+        override fun createIntent(context: Context, input: String?) =
             Intent(context, PostActivity::class.java)
-
+                .putExtra(Intent.EXTRA_TEXT, input)
         override fun parseResult(resultCode: Int, intent: Intent?): String? {
             if (resultCode !== Activity.RESULT_OK) return null
             intent ?: return null

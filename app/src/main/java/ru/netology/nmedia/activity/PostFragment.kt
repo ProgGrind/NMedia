@@ -34,7 +34,7 @@ class PostFragment : Fragment() {
 
         val binding = FragmentPostBinding.inflate(inflater, container, false)
 
-        val viewModel: PostViewModel by viewModels()
+        val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
         val viewHolder = ViewHolder(binding.postLayout, viewModel)
 

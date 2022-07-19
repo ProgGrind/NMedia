@@ -19,14 +19,13 @@ class PostViewModel(
 
     private val repository: PostRepository =
         FilePostRepository(application)
-        //        SharedPrefsPostRepository(application)
+        //SharedPrefsPostRepository(application)
 
     val data get() = repository.data
 
-    //    val shareEvent = SingleLiveEvent<Post>()
     val sharePostContent = SingleLiveEvent<String>()
-    val editPostContent = SingleLiveEvent<String>()
-    val navigateToPostContentScreenEvent = SingleLiveEvent<Unit>()
+    val navigateToPostScreenEvent = SingleLiveEvent<Long>()
+    val editPostContentScreenEvent = SingleLiveEvent<String>()
     val playVideoURL = SingleLiveEvent<String>()
 
     val currentPost = MutableLiveData<Post?>(null)
@@ -46,17 +45,12 @@ class PostViewModel(
         currentPost.value = null
     }
 
-    fun onCancelEditClicked() {
-        currentPost.value = null
-    }
-
     // region PostInteractionListener
 
     override fun onLikeClicked(post: Post) =
         repository.like(post.id)
 
     override fun onShareClicked(post: Post) {
-//        repository.share(post.id)
         sharePostContent.value = post.content
     }
 
@@ -65,14 +59,15 @@ class PostViewModel(
 
     override fun onEditClicked(post: Post) {
         currentPost.value = post
-        navigateToPostContentScreenEvent.call()
+        editPostContentScreenEvent.value = post.content
+    }
+
+    override fun onPostClicked(post: Post) {
+        currentPost.value = post
+        navigateToPostScreenEvent.value = post.id
     }
 
     // endregion PostInteractionListener
-
-    fun onCreateNewPost() {
-        navigateToPostContentScreenEvent.call()
-    }
 
     override fun onPlayVideoClicked(post: Post) {
         playVideoURL.value = post.videoURL

@@ -69,6 +69,9 @@ class PostsAdapter(
             binding.video.setOnClickListener {
                 listener.onPlayVideoClicked(post)
             }
+            itemView.setOnClickListener {
+                listener.onPostClicked(post)
+            }
 
         }
 
